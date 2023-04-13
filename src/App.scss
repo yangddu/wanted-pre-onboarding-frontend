@@ -1,0 +1,32 @@
+.wrapper {
+  background-color: #24a19c;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    h1 {
+      color: #fff;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    button {
+      width: 380px;
+      background-color: #fff;
+      color: #24a19c;
+      border-radius: 16px;
+      padding: 12px;
+      font-size: 18px;
+      font-weight: 500;
+      margin-top: 100px;
+      cursor: pointer;
+    }
+  }
+}
