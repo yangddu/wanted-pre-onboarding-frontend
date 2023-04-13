@@ -49,7 +49,7 @@ const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
             <GoPencil />
           </button>
           <button
-            data-testid="close-button"
+            data-testid="cancel-button"
             className="close-btn"
             onClick={() => setModifyMode(false)}
           >
@@ -65,7 +65,7 @@ const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
               onChange={checkToggle}
               checked={isCompleted}
             />
-            <p className={isCompleted ? "done" : ""}>{todo}</p>
+            <span className={isCompleted ? "done" : ""}>{todo}</span>
           </label>
           <button
             data-testid="modify-button"

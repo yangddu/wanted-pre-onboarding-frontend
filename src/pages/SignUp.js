@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { API, headers } from "../config";
+import { API, API_STATUS_CREATED, headers } from "../config";
 
 import "../style/Signup.scss";
 
@@ -48,7 +48,7 @@ const SignUp = () => {
         )
         .then((response) => {
           console.log(response);
-          if (response.status === 201) {
+          if (response.status === API_STATUS_CREATED) {
             navigate("/signin");
           }
         });

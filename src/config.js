@@ -6,3 +6,7 @@ export const API = {
 };
 
 export const headers = { "Content-Type": "application/json" };
+
+export const API_STATUS_SUCCESS = 200,
+  API_STATUS_CREATED = 201,
+  API_STATUS_NO_CONTENT = 204;

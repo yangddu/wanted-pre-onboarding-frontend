@@ -5,6 +5,11 @@ import TodoComponent from "../components/TodoComponent";
 
 import { BsPlusCircleFill } from "react-icons/bs";
 import "../style/Todo.scss";
+import {
+  API_STATUS_CREATED,
+  API_STATUS_NO_CONTENT,
+  API_STATUS_SUCCESS
+} from "../config";
 
 const Todo = () => {
   const [todoList, setTodoList] = useState([]);
@@ -47,7 +52,7 @@ const Todo = () => {
           }
         )
         .then((response) => {
-          if (response.status === 201) {
+          if (response.status === API_STATUS_CREATED) {
             getTodo();
           }
         });
@@ -91,7 +96,7 @@ const Todo = () => {
         }
       )
       .then((res) => {
-        if (res.status === 200) {
+        if (res.status === API_STATUS_SUCCESS) {
           getTodo();
         }
       })
@@ -111,7 +116,7 @@ const Todo = () => {
           }
         })
         .then((response) => {
-          if (response.status === 204) {
+          if (response.status === API_STATUS_NO_CONTENT) {
             getTodo();
           }
         });
