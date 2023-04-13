@@ -10,25 +10,25 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <Error />
+    errorElement: <Error />,
   },
   {
     path: "/signup",
     element: <SignUp />,
-    errorElement: <Error />
+    errorElement: <Error />,
   },
   {
     path: "/signin",
     element: <SignIn />,
-    errorElement: <Error />
+    errorElement: <Error />,
   },
   {
     path: "/todo",
     element: <Todo />,
-    errorElement: <Error />
+    errorElement: <Error />,
   },
   {
     path: "*",
-    element: <NotFound />
-  }
+    element: <NotFound />,
+  },
 ]);

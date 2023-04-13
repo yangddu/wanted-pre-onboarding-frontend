@@ -13,7 +13,7 @@ const SignIn = () => {
   const isAuthorized = localStorage.getItem("JWT");
   const navigate = useNavigate();
 
-  const emailRegExp = (e) => {
+  const emailRegExp = e => {
     const regExp = /@/;
     setEmailValid(true);
     if (regExp.test(e.target.value)) {
@@ -22,7 +22,7 @@ const SignIn = () => {
     }
   };
 
-  const passwordRegExp = (e) => {
+  const passwordRegExp = e => {
     const length = e.target.value.length;
     setPwdValid(true);
     if (length >= 8) {
@@ -31,7 +31,7 @@ const SignIn = () => {
     }
   };
 
-  const SignIn = async (e) => {
+  const SignIn = async e => {
     e.preventDefault();
 
     try {
@@ -40,13 +40,13 @@ const SignIn = () => {
           API.SIGNIN,
           {
             email: email,
-            password: password
+            password: password,
           },
           {
-            headers: headers
+            headers: headers,
           }
         )
-        .then((response) => {
+        .then(response => {
           localStorage.setItem("JWT", response.data.access_token);
           navigate("/todo");
         });

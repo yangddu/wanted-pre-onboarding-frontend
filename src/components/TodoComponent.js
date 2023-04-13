@@ -10,7 +10,7 @@ const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
     updateTodo(id, todo, !isCompleted);
   };
 
-  const inputChange = useCallback((e) => {
+  const inputChange = useCallback(e => {
     setInputVal(e.target.value);
   }, []);
 
