@@ -18,12 +18,14 @@ const Todo = () => {
 
   const todoInput = (e) => {
     const { value } = e.target;
-    setTodo(value);
-    if (value.length !== 0 || !!value) {
+    const regExp = /^\s|\s$/;
+    let spaceCheck = value.replace(/^\s+|\s+$/gm, "");
+    if (!!spaceCheck && (value.length !== 0 || !!value || regExp.test(value))) {
       setTodoValid(false);
     } else {
       setTodoValid(true);
     }
+    setTodo(value);
   };
 
   //todo 추가
