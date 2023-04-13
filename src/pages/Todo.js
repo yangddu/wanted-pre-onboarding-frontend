@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import TodoComponent from "../components/TodoComponent";
 
 import { BsPlusCircleFill } from "react-icons/bs";
 import "../style/Todo.scss";
-import TodoComponent from "../components/TodoComponent";
 
 const Todo = () => {
   const [todoList, setTodoList] = useState([]);
@@ -74,6 +74,50 @@ const Todo = () => {
     }
   };
 
+  const updateTodo = (todos) => {
+    axios
+      .put(
+        "https://www.pre-onboarding-selection-task.shop/todos",
+        {
+          todo: todos.todo,
+          isCompleted: todos.isCompleted
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          getTodo();
+        }
+      })
+      .catch((error) => {
+        window.console.log(error);
+      });
+  };
+
+  //todo 삭제
+  const deleteTodo = (id) => {
+    try {
+      axios
+        .delete(`https://www.pre-onboarding-selection-task.shop/todos/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        .then((response) => {
+          if (response.status === 204) {
+            getTodo();
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {!token ? (
@@ -104,6 +148,8 @@ const Todo = () => {
                 todos={todoItem}
                 key={todoItem.id}
                 checked={todoItem.isCompleted}
+                updateTodo={updateTodo}
+                deleteTodo={() => deleteTodo(todoItem.id)}
               />
             ))}
           </ul>

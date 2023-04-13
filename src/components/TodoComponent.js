@@ -1,6 +1,7 @@
 import React from "react";
+import { GoTrashcan, GoPencil } from "react-icons/go";
 
-const TodoComponent = ({ todos }) => {
+const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
   const { id, todo, isCompleted } = todos;
 
   return (
@@ -10,11 +11,19 @@ const TodoComponent = ({ todos }) => {
           <input type="checkbox" className="checkbox" />
           <p>{todo}</p>
         </label>
-        <button data-testid="modify-button" className="modify-btn">
-          수정
+        <button
+          data-testid="modify-button"
+          className="modify-btn"
+          onClick={() => updateTodo(id, todo, isCompleted)}
+        >
+          <GoPencil />
         </button>
-        <button data-testid="delete-button" className="delete-btn">
-          삭제
+        <button
+          data-testid="delete-button"
+          className="delete-btn"
+          onClick={deleteTodo}
+        >
+          <GoTrashcan />
         </button>
       </li>
     </>
