@@ -12,7 +12,7 @@ const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
 
   const inputChange = useCallback((e) => {
     setInputVal(e.target.value);
-  });
+  }, []);
 
   const submitButton = () => {
     if (inputVal === "") {

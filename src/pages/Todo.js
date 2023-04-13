@@ -17,10 +17,6 @@ const Todo = () => {
   const [todoValid, setTodoValid] = useState(true);
   const token = localStorage.getItem("JWT");
 
-  useEffect(() => {
-    getTodo();
-  }, []);
-
   const todoInput = (e) => {
     const { value } = e.target;
     const regExp = /^\s|\s$/;
@@ -124,6 +120,10 @@ const Todo = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    getTodo();
+  }, []);
 
   return (
     <>
