@@ -47,13 +47,11 @@ const SignUp = () => {
           }
         )
         .then(response => {
-          console.log(response);
           if (response.status === API_STATUS_CREATED) {
             navigate("/signin");
           }
         });
     } catch (error) {
-      console.log(error);
       alert(error.response.data.message);
       navigate("/signup");
     }

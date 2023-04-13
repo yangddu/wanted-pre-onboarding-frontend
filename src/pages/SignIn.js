@@ -51,7 +51,6 @@ const SignIn = () => {
           navigate("/todo");
         });
     } catch (error) {
-      console.log(error);
       alert(error.response.data.message);
       navigate("/signin");
     }

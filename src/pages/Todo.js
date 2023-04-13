@@ -53,9 +53,7 @@ const Todo = () => {
             getTodo();
           }
         });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
     setTodo("");
     setTodoValid(true);
   };
@@ -72,9 +70,7 @@ const Todo = () => {
         .then(response => {
           setTodoList(response.data);
         });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const updateTodo = (id, todo, isCompleted) => {
@@ -98,7 +94,6 @@ const Todo = () => {
         }
       })
       .catch(error => {
-        console.log(error);
         alert(error.response.data.error);
       });
   };
@@ -117,9 +112,7 @@ const Todo = () => {
             getTodo();
           }
         });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -127,7 +120,7 @@ const Todo = () => {
   }, []);
 
   return (
-    <>
+    <div>
       {!token ? (
         <Navigate to="/signin" />
       ) : (
@@ -163,7 +156,7 @@ const Todo = () => {
           </ul>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

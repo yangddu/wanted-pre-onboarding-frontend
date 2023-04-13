@@ -24,7 +24,7 @@ const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
   };
 
   return (
-    <>
+    <div>
       {modifyMode ? (
         <li>
           <label>
@@ -83,7 +83,7 @@ const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
           </button>
         </li>
       )}
-    </>
+    </div>
   );
 };
 
