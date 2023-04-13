@@ -19,11 +19,10 @@ const Todo = () => {
   const todoInput = (e) => {
     const { value } = e.target;
     setTodo(value);
-    console.log("???", !!value);
-    console.log(value.length);
-    setTodoValid(true);
     if (value.length !== 0 || !!value) {
       setTodoValid(false);
+    } else {
+      setTodoValid(true);
     }
   };
 
@@ -74,13 +73,13 @@ const Todo = () => {
     }
   };
 
-  const updateTodo = (todos) => {
+  const updateTodo = (id, todo, isCompleted) => {
     axios
       .put(
-        "https://www.pre-onboarding-selection-task.shop/todos",
+        `https://www.pre-onboarding-selection-task.shop/todos/${id}`,
         {
-          todo: todos.todo,
-          isCompleted: todos.isCompleted
+          todo: todo,
+          isCompleted
         },
         {
           headers: {
@@ -95,7 +94,8 @@ const Todo = () => {
         }
       })
       .catch((error) => {
-        window.console.log(error);
+        console.log(error);
+        alert(error.response.data.error);
       });
   };
 
