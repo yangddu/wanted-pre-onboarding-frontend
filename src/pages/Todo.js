@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { BsPlusCircleFill } from "react-icons/bs";
 import "../style/Todo.scss";
+import TodoComponent from "../components/TodoComponent";
 
 const Todo = () => {
   const [todoList, setTodoList] = useState([]);
@@ -99,18 +100,11 @@ const Todo = () => {
           </form>
           <ul>
             {todoList.map((todoItem) => (
-              <li key={todoItem.id}>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                  <p>{todoItem.todo}</p>
-                </label>
-                <button data-testid="modify-button" className="modify-btn">
-                  수정
-                </button>
-                <button data-testid="delete-button" className="delete-btn">
-                  삭제
-                </button>
-              </li>
+              <TodoComponent
+                todos={todoItem}
+                key={todoItem.id}
+                checked={todoItem.isCompleted}
+              />
             ))}
           </ul>
         </div>
