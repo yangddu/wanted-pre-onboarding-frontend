@@ -13,7 +13,7 @@ $ npm start
 
 ## 데모 영상
 
-- 배포 링크 :
+- 배포 링크 : http://yangddu-todolist.s3-website.ap-northeast-2.amazonaws.com/
 
 ## 성과
 
