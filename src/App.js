@@ -10,8 +10,8 @@ const App = () => {
           <img
             src="https://i.ibb.co/MVCq7SK/logo.png"
             alt="logo"
-            width="100px"
-            height="100px"
+            width="90px"
+            height="90px"
           />
           <h1>TODO MATE</h1>
           <Link to="/signup">
