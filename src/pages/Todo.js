@@ -1,26 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import axios from "axios";
-import TodoComponent from "../components/TodoComponent";
+import React, { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import axios from 'axios';
+import TodoComponent from '../components/TodoComponent';
 
-import { BsPlusCircleFill } from "react-icons/bs";
-import "../style/Todo.scss";
-import {
-  API_STATUS_CREATED,
-  API_STATUS_NO_CONTENT,
-  API_STATUS_SUCCESS
-} from "../config";
+import { BsPlusCircleFill } from 'react-icons/bs';
+import '../style/Todo.scss';
+import { API, API_STATUS_CREATED, API_STATUS_NO_CONTENT, API_STATUS_SUCCESS } from '../config';
 
 const Todo = () => {
   const [todoList, setTodoList] = useState([]);
-  const [todos, setTodo] = useState("");
+  const [todos, setTodo] = useState('');
   const [todoValid, setTodoValid] = useState(true);
-  const token = localStorage.getItem("JWT");
+  const token = localStorage.getItem('JWT');
 
   const todoInput = (e) => {
     const { value } = e.target;
     const regExp = /^\s|\s$/;
-    let spaceCheck = value.replace(/^\s+|\s+$/gm, "");
+    let spaceCheck = value.replace(/^\s+|\s+$/gm, '');
     if (!!spaceCheck && (value.length !== 0 || !!value || regExp.test(value))) {
       setTodoValid(false);
     } else {
@@ -36,16 +32,16 @@ const Todo = () => {
     try {
       axios
         .post(
-          "https://www.pre-onboarding-selection-task.shop/todos",
+          API.TODO,
           {
-            todo: todos
+            todo: todos,
           },
           {
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`
-            }
-          }
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          },
         )
         .then((response) => {
           if (response.status === API_STATUS_CREATED) {
@@ -55,7 +51,7 @@ const Todo = () => {
     } catch (error) {
       console.log(error);
     }
-    setTodo("");
+    setTodo('');
     setTodoValid(true);
   };
 
@@ -63,10 +59,10 @@ const Todo = () => {
   const getTodo = () => {
     try {
       axios
-        .get("https://www.pre-onboarding-selection-task.shop/todos", {
+        .get(API.TODO, {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         })
         .then((response) => {
           setTodoList(response.data);
@@ -79,17 +75,17 @@ const Todo = () => {
   const updateTodo = (id, todo, isCompleted) => {
     axios
       .put(
-        `https://www.pre-onboarding-selection-task.shop/todos/${id}`,
+        `${API.TODO}/${id}`,
         {
           todo: todo,
-          isCompleted
+          isCompleted,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        }
+            'Content-Type': 'application/json',
+          },
+        },
       )
       .then((res) => {
         if (res.status === API_STATUS_SUCCESS) {
@@ -106,10 +102,10 @@ const Todo = () => {
   const deleteTodo = (id) => {
     try {
       axios
-        .delete(`https://www.pre-onboarding-selection-task.shop/todos/${id}`, {
+        .delete(`${API.TODO}/${id}`, {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         })
         .then((response) => {
           if (response.status === API_STATUS_NO_CONTENT) {
@@ -134,17 +130,8 @@ const Todo = () => {
           <h1 className="title">Todo List</h1>
           <form onSubmit={addTodo}>
             <div className="input-wrapper">
-              <input
-                data-testid="new-todo-input"
-                value={todos}
-                onChange={todoInput}
-              />
-              <button
-                data-testid="new-todo-add-button"
-                type="submit"
-                className="plus-btn"
-                disabled={todoValid}
-              >
+              <input data-testid="new-todo-input" value={todos} onChange={todoInput} />
+              <button data-testid="new-todo-add-button" type="submit" className="plus-btn" disabled={todoValid}>
                 <BsPlusCircleFill />
               </button>
             </div>
