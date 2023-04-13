@@ -8,7 +8,7 @@ import Todo from "../pages/Todo";
 
 export const router = createBrowserRouter([
   {
-    path: "/*",
+    path: "/",
     element: <App />,
     errorElement: <Error />,
   },
