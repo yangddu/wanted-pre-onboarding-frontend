@@ -18,6 +18,16 @@ $ npm start
 
 - 배포 링크 : http://yangddu-todolist.s3-website.ap-northeast-2.amazonaws.com/
 
+  - 회원가입, 로그인 기능
+  
+https://user-images.githubusercontent.com/89117851/231919874-9126050d-f455-4da6-b490-f741703eadc9.mov
+
+
+  - 할일 추가, 수정, 삭제 기능
+https://user-images.githubusercontent.com/89117851/231919436-68cbdf91-77a9-4d95-8b7b-5e9647ed2fad.mov
+
+
+
 
 ## ▫️ 구현 사항
 
@@ -27,7 +37,7 @@ $ npm start
   - 로그인 페이지에서 로그인 진행 후, 완료 시 /todo 경로로 이동
   - 로그인 여부에 따른 리다이렉트 처리 (로그인 하지 않은 상태에서 /todo 경로로 이동할 경우 /signin 경로로 리다이렉트)
 
-#### - 투두리스트 내 기능
+#### - 할일 목록 내 기능
   - /todo 경로에 접속하면 투두 리스트의 목록 보여줌
   - 리스트 페이지에 새로운 TODO 입력 가능한 input, 추가 button 구현
   - TODO 추가 인풋 내 유효성 검사 (연속 공백 생략, 빈값 정규표현식)
