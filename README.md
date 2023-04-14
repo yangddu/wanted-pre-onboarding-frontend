@@ -2,6 +2,7 @@
 
 - TODO MATE 🧸
 
+
 ## ▫️ 프로젝트 실행 방법
 
 #### 설치 및 실행
@@ -12,9 +13,11 @@ $ npm install
 $ npm start
 ```
 
+
 ## ▫️ 데모 영상
 
 - 배포 링크 : http://yangddu-todolist.s3-website.ap-northeast-2.amazonaws.com/
+
 
 ## ▫️ 구현 사항
 
@@ -31,6 +34,7 @@ $ npm start
   - TODO의 체크박스로 완료 여부 수정 가능하도록 구현
   - 수정모드일 경우, TODO 우측에 수정된 인풋 제출 및 취소 기능 구현
   - 수정모드가 아닐 경우, 수정 가능한 인풋 노출 및 삭제 기능 구현
+
 
 
 ## ▫️ 성과
