@@ -1,38 +1,38 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { API, API_STATUS_CREATED, headers } from "../config";
+import axios from "axios"
+import { useState } from "react"
+import { Link, Navigate, useNavigate } from "react-router-dom"
+import { API, API_STATUS_CREATED, headers } from "../config"
 
-import "../style/Signup.scss";
+import "../style/Signup.scss"
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailValid, setEmailValid] = useState(true);
-  const [pwdValid, setPwdValid] = useState(true);
-  const isAuthorized = localStorage.getItem("JWT");
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [emailValid, setEmailValid] = useState(true)
+  const [pwdValid, setPwdValid] = useState(true)
+  const isAuthorized = localStorage.getItem("JWT")
+  const navigate = useNavigate()
 
-  const emailRegExp = e => {
-    const regExp = /@/;
-    setEmailValid(true);
+  const emailRegExp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const regExp = /@/
+    setEmailValid(true)
     if (regExp.test(e.target.value)) {
-      setEmailValid(false);
-      setEmail(e.target.value);
+      setEmailValid(false)
+      setEmail(e.target.value)
     }
-  };
+  }
 
-  const passwordRegExp = e => {
-    const length = e.target.value.length;
-    setPwdValid(true);
+  const passwordRegExp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const length = e.target.value.length
+    setPwdValid(true)
     if (length >= 8) {
-      setPwdValid(false);
-      setPassword(e.target.value);
+      setPwdValid(false)
+      setPassword(e.target.value)
     }
-  };
+  }
 
-  const SignUp = async e => {
-    e.preventDefault();
+  const SignUpHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
 
     try {
       await axios
@@ -40,27 +40,27 @@ const SignUp = () => {
           API.SIGNUP,
           {
             email: email,
-            password: password,
+            password: password
           },
           {
-            headers: headers,
+            headers: headers
           }
         )
         .then(response => {
           if (response.status === API_STATUS_CREATED) {
-            navigate("/signin");
+            navigate("/signin")
           }
-        });
-    } catch (error) {
-      alert(error.response.data.message);
-      navigate("/signup");
+        })
+    } catch (error: any) {
+      alert(error.response.data.message)
+      navigate("/signup")
     }
-  };
+  }
 
   return (
     <div className="signup-wrapper">
       {!isAuthorized ? (
-        <form onSubmit={SignUp}>
+        <form onSubmit={SignUpHandler}>
           <div className="input">
             <div className="input-wrapper">
               <label>이메일 주소</label>
@@ -98,7 +98,7 @@ const SignUp = () => {
         <Navigate to="/todo" />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

@@ -1,38 +1,38 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { API, headers } from "../config";
+import axios from "axios"
+import { useState } from "react"
+import { Link, Navigate, useNavigate } from "react-router-dom"
+import { API, headers } from "../config"
 
-import "../style/Signin.scss";
+import "../style/Signin.scss"
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [emailValid, setEmailValid] = useState(true);
-  const [pwdValid, setPwdValid] = useState(true);
-  const isAuthorized = localStorage.getItem("JWT");
-  const navigate = useNavigate();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [emailValid, setEmailValid] = useState(true)
+  const [pwdValid, setPwdValid] = useState(true)
+  const isAuthorized = localStorage.getItem("JWT")
+  const navigate = useNavigate()
 
-  const emailRegExp = e => {
-    const regExp = /@/;
-    setEmailValid(true);
+  const emailRegExp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const regExp = /@/
+    setEmailValid(true)
     if (regExp.test(e.target.value)) {
-      setEmailValid(false);
-      setEmail(e.target.value);
+      setEmailValid(false)
+      setEmail(e.target.value)
     }
-  };
+  }
 
-  const passwordRegExp = e => {
-    const length = e.target.value.length;
-    setPwdValid(true);
+  const passwordRegExp = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const length = e.target.value.length
+    setPwdValid(true)
     if (length >= 8) {
-      setPwdValid(false);
-      setPassword(e.target.value);
+      setPwdValid(false)
+      setPassword(e.target.value)
     }
-  };
+  }
 
-  const SignIn = async e => {
-    e.preventDefault();
+  const SignInHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
 
     try {
       await axios
@@ -40,26 +40,26 @@ const SignIn = () => {
           API.SIGNIN,
           {
             email: email,
-            password: password,
+            password: password
           },
           {
-            headers: headers,
+            headers: headers
           }
         )
         .then(response => {
-          localStorage.setItem("JWT", response.data.access_token);
-          navigate("/todo");
-        });
-    } catch (error) {
-      alert(error.response.data.message);
-      navigate("/signin");
+          localStorage.setItem("JWT", response.data.access_token)
+          navigate("/todo")
+        })
+    } catch (error: any) {
+      alert(error.response.data.message)
+      navigate("/signin")
     }
-  };
+  }
 
   return (
     <div className="signin-wrapper">
       {!isAuthorized ? (
-        <form onSubmit={SignIn}>
+        <form onSubmit={SignInHandler}>
           <div className="input">
             <div className="input-wrapper">
               <label>이메일 주소</label>
@@ -97,7 +97,7 @@ const SignIn = () => {
         <Navigate to="/todo" />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn
