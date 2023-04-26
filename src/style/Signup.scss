@@ -5,21 +5,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.signup-wrapper {
-  background-color: #fff;
-  border: 1px solid #e0e5ed;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
   .input {
     width: 300px;
     margin: 0 auto;
 
     &-wrapper {
-      margin-bottom: 24px;
+      height: 98px;
+      // margin-bottom: 24px;
 
       label {
         font-size: 13px;
@@ -40,6 +33,12 @@
           outline: 1px solid #24a19c;
         }
       }
+
+      .errorMsg {
+        color: red;
+        font-size: 11px;
+        margin-top: 6px;
+      }
     }
   }
   button {
@@ -58,7 +57,7 @@
     }
   }
 
-  p {
+  .signin-link {
     color: #24a19c;
     font-size: 12px;
     text-align: center;

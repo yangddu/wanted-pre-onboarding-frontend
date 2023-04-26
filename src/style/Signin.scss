@@ -11,7 +11,7 @@
     margin: 0 auto;
 
     &-wrapper {
-      margin-bottom: 24px;
+      height: 98px;
 
       label {
         font-size: 13px;
@@ -32,6 +32,12 @@
           outline: 1px solid #24a19c;
         }
       }
+
+      .errorMsg {
+        color: red;
+        font-size: 11px;
+        margin-top: 6px;
+      }
     }
   }
 
@@ -51,7 +57,7 @@
     }
   }
 
-  p {
+  .signup-link {
     color: #24a19c;
     font-size: 12px;
     text-align: center;
