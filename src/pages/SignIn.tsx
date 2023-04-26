@@ -1,5 +1,4 @@
 import axios from "axios"
-import { useRef, useState } from "react"
 import { Link, Navigate, useNavigate } from "react-router-dom"
 import { API, headers } from "../config"
 import useLoginInput from "../hooks/useLoginInput"
@@ -29,11 +28,11 @@ const SignIn = () => {
         .post(
           API.SIGNIN,
           {
-            email: email,
-            password: password
+            email,
+            password
           },
           {
-            headers: headers
+            headers
           }
         )
         .then(response => {
