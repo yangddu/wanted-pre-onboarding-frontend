@@ -1,27 +1,28 @@
-import React, { useCallback, useState } from "react";
-import { GoTrashcan, GoPencil, GoX } from "react-icons/go";
+import React, { useCallback, useState } from 'react'
+import { GoTrashcan, GoPencil, GoX } from 'react-icons/go'
+import { TODO_ITEM_PROPS } from '../types/constant'
 
-const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
-  const { id, todo, isCompleted } = todos;
-  const [modifyMode, setModifyMode] = useState(false);
-  const [inputVal, setInputVal] = useState("");
+const TodoComponent = ({ todos, editTodo, deleteTodo }: TODO_ITEM_PROPS) => {
+  const { id, todo, isCompleted } = todos
+  const [modifyMode, setModifyMode] = useState(false)
+  const [updateVal, setUpdateVal] = useState('')
 
   const checkToggle = () => {
-    updateTodo(id, todo, !isCompleted);
-  };
+    editTodo(id, todo, !isCompleted)
+  }
 
-  const inputChange = useCallback(e => {
-    setInputVal(e.target.value);
-  }, []);
+  const inputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdateVal(e.target.value)
+  }, [])
 
   const submitButton = () => {
-    if (inputVal === "") {
-      updateTodo(id, todo, isCompleted);
+    if (updateVal === '') {
+      editTodo(id, todo, isCompleted)
     } else {
-      updateTodo(id, inputVal, isCompleted);
+      editTodo(id, updateVal, isCompleted)
     }
-    setModifyMode(false);
-  };
+    setModifyMode(false)
+  }
 
   return (
     <div>
@@ -65,7 +66,7 @@ const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
               onChange={checkToggle}
               checked={isCompleted}
             />
-            <span className={isCompleted ? "done" : ""}>{todo}</span>
+            <span className={isCompleted ? 'done' : ''}>{todo}</span>
           </label>
           <button
             data-testid="modify-button"
@@ -77,14 +78,14 @@ const TodoComponent = ({ todos, updateTodo, deleteTodo }) => {
           <button
             data-testid="delete-button"
             className="delete-btn"
-            onClick={deleteTodo}
+            onClick={() => deleteTodo(id)}
           >
             <GoTrashcan />
           </button>
         </li>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default TodoComponent;
+export default TodoComponent

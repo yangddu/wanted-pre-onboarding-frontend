@@ -1,5 +1,15 @@
-// {
-//   "parser": "@typescript-eslint/parser",
-//   "plugins": ["@typescript-eslint"],
-//   "extends": ["airbnb-base", "plugin:@typescript-eslint/eslint-recommended"]
-// }
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["plugin:@typescript-eslint/recommended", "prettier"],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "no-console": ["warn", { "allow": ["warn", "error", "info"] }]
+  }
+}
