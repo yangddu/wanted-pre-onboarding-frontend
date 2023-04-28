@@ -15,9 +15,7 @@ const SignIn = () => {
   const navigate = useNavigate()
 
   const LoginHandler = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      // (email: string, password: string) => {
+    (email: string, password: string) => {
       SignInTodo(email, password)
         .then(res => res.data.access_token)
         .then(token => {
@@ -42,13 +40,21 @@ const SignIn = () => {
 
   return (
     <main className="signin-wrapper">
-      <form onSubmit={LoginHandler}>
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          LoginHandler(email, password)
+        }}
+      >
         <div className="input">
           <div className="input-wrapper">
             <label>이메일 주소</label>
             <input
+              id="email"
               data-testid="email-input"
               type="text"
+              name="email"
+              value={email}
               required
               placeholder="아이디(이메일)"
               onChange={handleChange}
@@ -56,10 +62,13 @@ const SignIn = () => {
             {/* {emailErrorMsg && <p className="errorMsg">{emailErrorMsg}</p>} */}
           </div>
           <div className="input-wrapper">
-            <label>비밀번호</label>
+            <label htmlFor="password">비밀번호</label>
             <input
+              id="password"
               data-testid="password-input"
               type="password"
+              name="password"
+              value={password}
               required
               placeholder="비밀번호(영문+숫자+특수문자 조합 8~16자리)"
               onChange={handleChange}
@@ -71,7 +80,7 @@ const SignIn = () => {
         </div>
         <button data-testid="signin-button" type="submit">
           {/* disabled={!regEx(email, password)} */}
-          <div>{regEx(email, password)}</div>
+          {/* <div>{regEx(email, password)}</div> */}
           로그인
         </button>
         <Link to="/signup">

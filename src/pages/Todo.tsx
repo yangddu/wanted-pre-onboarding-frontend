@@ -20,8 +20,7 @@ const Todo = () => {
   const navigate = useNavigate()
 
   //todo 추가
-  const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const addTodo = () => {
     if (todoRegEx(todo)) {
       setTodoValid(true)
     } else {
@@ -86,9 +85,16 @@ const Todo = () => {
     <div>
       <div className="todo-wrapper">
         <h1 className="title">Todo List</h1>
-        <form onSubmit={addTodo}>
+        <form
+          onSubmit={e => {
+            e.preventDefault()
+            addTodo()
+          }}
+        >
           <div className="input-wrapper">
             <input
+              id="todo"
+              name="todo"
               data-testid="new-todo-input"
               value={todo}
               onChange={handleChange}
@@ -97,7 +103,6 @@ const Todo = () => {
               data-testid="new-todo-add-button"
               type="submit"
               className="plus-btn"
-              disabled={todoValid}
             >
               <BsPlusCircleFill />
             </button>

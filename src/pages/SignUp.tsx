@@ -15,9 +15,7 @@ const SignUp = () => {
   const navigate = useNavigate()
 
   const SignUpHandler = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
-      // (email: string, password: string) => {
+    (email: string, password: string) => {
       SignUpTodo(email, password)
         .then(res => {
           if (res.status === 201) {
@@ -39,13 +37,20 @@ const SignUp = () => {
 
   return (
     <div className="signup-wrapper">
-      <form onSubmit={SignUpHandler}>
+      <form
+        onSubmit={e => {
+          e.preventDefault()
+          SignUpHandler(email, password)
+        }}
+      >
         <div className="input">
           <div className="input-wrapper">
-            <label>이메일 주소</label>
+            <label htmlFor="email">이메일 주소</label>
             <input
+              id="email"
               data-testid="email-input"
               type="text"
+              name="email"
               value={email}
               required
               placeholder="아이디(이메일)"
@@ -54,10 +59,12 @@ const SignUp = () => {
             {/* {emailErrorMsg && <p className="errorMsg">{emailErrorMsg}</p>} */}
           </div>
           <div className="input-wrapper">
-            <label>비밀번호</label>
+            <label htmlFor="password">비밀번호</label>
             <input
+              id="password"
               data-testid="password-input"
               type="password"
+              name="password"
               value={password}
               required
               placeholder="비밀번호(영문+숫자+특수문자 조합 8~16자리)"
