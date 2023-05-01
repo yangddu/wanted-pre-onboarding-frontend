@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import TodoComponent from '../components/TodoComponent'
+import TodoItem from '../components/TodoItem'
 
 import { BsPlusCircleFill } from 'react-icons/bs'
 import '../style/Todo.scss'
-import { AddTodo, DeleteTodo, EditTodo, GetTodo } from 'api'
-import { todoRegEx } from 'utils/regex'
-import useInputs from 'hooks/useInputs'
-import { TODO_ITEM } from 'types/constant'
+import { todoRegEx } from '../utils/regex'
+import useInputs from '../hooks/useInputs'
+import { TODO, TODO_ITEM } from '../types'
+import {
+  createTodoAPI,
+  deleteTodoAPI,
+  getTodoAPI,
+  updateTodoAPI
+} from '../api/todo'
+import { AxiosError, AxiosResponse } from 'axios'
 
 const Todo = () => {
   const {
@@ -16,17 +22,11 @@ const Todo = () => {
     setValues
   } = useInputs({ todo: '' })
   const [todoList, setTodoList] = useState([])
-  const [todoValid, setTodoValid] = useState(true)
   const navigate = useNavigate()
 
   //todo 추가
   const addTodo = () => {
-    if (todoRegEx(todo)) {
-      setTodoValid(true)
-    } else {
-      setTodoValid(false)
-    }
-    AddTodo(todo)
+    createTodoAPI(todo)
       .then(res => {
         if (res.status === 201) {
           getTodo()
@@ -39,16 +39,19 @@ const Todo = () => {
   }
 
   //todo 불러오기
-  const getTodo = () => {
-    GetTodo()
-      .then(res => {
-        setTodoList(res.data)
-      })
-      .catch((err: any) => console.log(err))
+  const getTodo = async () => {
+    try {
+      const res: any = await getTodoAPI()
+      // console.log(res)
+      // setTodoList(res.data)
+      setTodoList(res.data)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const editTodo = (id: number, todo: string, isCompleted: boolean) => {
-    EditTodo(id, todo, isCompleted)
+    updateTodoAPI(id, todo, isCompleted)
       .then(res => {
         if (res.status === 200) {
           getTodo()
@@ -61,7 +64,7 @@ const Todo = () => {
 
   //todo 삭제
   const deleteTodo = (id: number) => {
-    DeleteTodo(id)
+    deleteTodoAPI(id)
       .then(res => {
         if (res.status === 204) {
           getTodo()
@@ -72,14 +75,14 @@ const Todo = () => {
       })
   }
 
-  useEffect(() => {
-    getTodo()
+  // useEffect(() => {
+  //   getTodo()
 
-    const token = localStorage.getItem('token')
-    if (!token) {
-      navigate('/signin')
-    }
-  }, [navigate])
+  //   const token = localStorage.getItem('token')
+  //   if (!token) {
+  //     navigate('/signin')
+  //   }
+  // }, [navigate])
 
   return (
     <div>
@@ -110,7 +113,7 @@ const Todo = () => {
         </form>
         <ul>
           {todoList.map((todoItem: TODO_ITEM) => (
-            <TodoComponent
+            <TodoItem
               todos={todoItem}
               key={todoItem.id}
               checked={todoItem.isCompleted}

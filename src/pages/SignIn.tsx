@@ -1,10 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useCallback } from 'react'
+import useInputs from '../hooks/useInputs'
+import { SignInTodo } from '../api/auth'
 
 import '../style/Signin.scss'
-import useInputs from 'hooks/useInputs'
-import { SignInTodo } from 'api'
-import { useCallback, useEffect } from 'react'
-import { regEx } from 'utils/regex'
+import { regEx } from '../utils/regex'
 
 const SignIn = () => {
   const {
@@ -30,14 +30,6 @@ const SignIn = () => {
     [navigate]
   )
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    if (token) {
-      navigate('/todo')
-    }
-  }, [navigate])
-
   return (
     <main className="signin-wrapper">
       <form
@@ -59,7 +51,6 @@ const SignIn = () => {
               placeholder="아이디(이메일)"
               onChange={handleChange}
             />
-            {/* {emailErrorMsg && <p className="errorMsg">{emailErrorMsg}</p>} */}
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">비밀번호</label>
@@ -73,14 +64,13 @@ const SignIn = () => {
               placeholder="비밀번호(영문+숫자+특수문자 조합 8~16자리)"
               onChange={handleChange}
             />
-            {/* {passwordErrorMsg && (
-                <p className="errorMsg">{passwordErrorMsg}</p>
-              )} */}
           </div>
         </div>
-        <button data-testid="signin-button" type="submit">
-          {/* disabled={!regEx(email, password)} */}
-          {/* <div>{regEx(email, password)}</div> */}
+        <button
+          data-testid="signin-button"
+          type="submit"
+          disabled={!regEx(email, password)}
+        >
           로그인
         </button>
         <Link to="/signup">

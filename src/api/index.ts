@@ -1,33 +1,32 @@
-import { authInstance } from "../utils/axios";
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 
-export const SignInTodo = (email: string, password: string): Promise<any> =>
-  authInstance.post(`/auth/signin`, {
-    email,
-    password
-  });
+const BASE_URL = 'https://www.pre-onboarding-selection-task.shop'
 
-export const SignUpTodo = (email: string, password: string): Promise<any> =>
-  authInstance.post(`/auth/signup`, {
-    email,
-    password
-  });
+const defaultOptions = {
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+}
 
-export const GetTodo = () => authInstance.get(`/todos`);
+export const instance: AxiosInstance = axios.create(defaultOptions)
+export const authInstance: AxiosInstance = axios.create(defaultOptions)
+export const todoInstance: AxiosInstance = axios.create(defaultOptions)
 
-export const AddTodo = (todo: string): Promise<any> =>
-  authInstance.post(`/todos`, {
-    todo
-  });
+todoInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
 
-export const EditTodo = (
-  id: number,
-  todo: string,
-  isCompleted: boolean
-): Promise<any> =>
-  authInstance.put(`/todos/${id}`, {
-    todo,
-    isCompleted
-  });
-
-export const DeleteTodo = (id: number): Promise<any> =>
-  authInstance.delete(`/todos/${id}`);
+todoInstance.interceptors.response.use(
+  function (response) {
+    return response
+  },
+  function (error) {
+    console.error(error)
+    return Promise.reject()
+  }
+)
