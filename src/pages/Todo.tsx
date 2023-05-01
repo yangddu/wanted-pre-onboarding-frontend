@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import TodoItem from '../components/TodoItem'
 
 import { BsPlusCircleFill } from 'react-icons/bs'
@@ -13,16 +11,16 @@ import {
   getTodoAPI,
   updateTodoAPI
 } from '../api/todo'
-import { AxiosError, AxiosResponse } from 'axios'
+import useTodo from '../hooks/useTodo'
 
 const Todo = () => {
+  const { todos, setTodos } = useTodo()
   const {
     values: { todo },
     handleChange,
     setValues
   } = useInputs({ todo: '' })
-  const [todoList, setTodoList] = useState([])
-  const navigate = useNavigate()
+  // const [todoList, setTodoList] = useState([])
 
   //todo 추가
   const addTodo = () => {
@@ -42,9 +40,7 @@ const Todo = () => {
   const getTodo = async () => {
     try {
       const res: any = await getTodoAPI()
-      // console.log(res)
-      // setTodoList(res.data)
-      setTodoList(res.data)
+      setTodos(res.data)
     } catch (err) {
       console.log(err)
     }
@@ -75,15 +71,6 @@ const Todo = () => {
       })
   }
 
-  // useEffect(() => {
-  //   getTodo()
-
-  //   const token = localStorage.getItem('token')
-  //   if (!token) {
-  //     navigate('/signin')
-  //   }
-  // }, [navigate])
-
   return (
     <div>
       <div className="todo-wrapper">
@@ -106,13 +93,14 @@ const Todo = () => {
               data-testid="new-todo-add-button"
               type="submit"
               className="plus-btn"
+              disabled={todoRegEx(todo)}
             >
               <BsPlusCircleFill />
             </button>
           </div>
         </form>
         <ul>
-          {todoList.map((todoItem: TODO_ITEM) => (
+          {todos.map((todoItem: TODO_ITEM) => (
             <TodoItem
               todos={todoItem}
               key={todoItem.id}
