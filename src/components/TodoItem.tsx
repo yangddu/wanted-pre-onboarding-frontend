@@ -1,28 +1,41 @@
 import React, { useCallback, useState } from 'react'
 import { GoTrashcan, GoPencil, GoX } from 'react-icons/go'
 import { TODO_ITEM_PROPS } from '../types'
+import useInputs from '../hooks/useInputs'
+import useTodoUpdater from '../hooks/useTodoUpdater'
 
-const TodoComponent = ({ todos, editTodo, deleteTodo }: TODO_ITEM_PROPS) => {
-  const { id, todo, isCompleted } = todos
-  const [isEditMode, setIsEditMode] = useState(false)
-  const [updateVal, setUpdateVal] = useState('')
+const TodoComponent = ({ todos, todoItem, deleteTodo }: any) => {
+  const {
+    values: { updateVal },
+    handleChange,
+    setValues
+  } = useInputs({ updateVal: '' })
+  const {
+    handleCheckToggle,
+    todoStatus,
+    handleModify,
+    handleCancel,
+    handleDelete,
+    // handleChange,
+    handleSubmitButton
+    // updateVal
+  } = useTodoUpdater(todos, deleteTodo, todoItem, updateVal)
+  console.log('values', updateVal)
 
-  const checkToggle = () => {
-    editTodo(id, todo, !isCompleted)
-  }
+  // const [updateVal, setUpdateVal] = useState('')
 
-  const inputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setUpdateVal(e.target.value)
-  }, [])
+  // const inputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setUpdateVal(e.target.value)
+  // }, [])
 
-  const submitButton = () => {
-    if (updateVal === '') {
-      editTodo(id, todo, isCompleted)
-    } else {
-      editTodo(id, updateVal, isCompleted)
-    }
-    setIsEditMode(false)
-  }
+  // const submitButton = () => {
+  //   if (updateVal === '') {
+  //     editTodo(id, todo, isCompleted)
+  //   } else {
+  //     editTodo(id, updateVal, isCompleted)
+  //   }
+  //   setModifyMode(false)
+  // }
 
   const showEditMode = () => (
     <>
@@ -31,27 +44,27 @@ const TodoComponent = ({ todos, editTodo, deleteTodo }: TODO_ITEM_PROPS) => {
           <input
             type="checkbox"
             id="checkbox"
-            onChange={checkToggle}
-            checked={isCompleted}
+            onChange={handleCheckToggle}
+            checked={todoStatus.isCompleted}
           />
           <input
             data-testid="modify-input"
             className="modify-input"
-            defaultValue={todo}
-            onChange={inputChange}
+            defaultValue={todoStatus.value}
+            onChange={handleChange}
           />
         </label>
         <button
           data-testid="submit-button"
           className="submit-btn"
-          onClick={submitButton}
+          onClick={handleSubmitButton}
         >
           <GoPencil />
         </button>
         <button
           data-testid="cancel-button"
           className="close-btn"
-          onClick={() => setIsEditMode(false)}
+          onClick={handleCancel}
         >
           <GoX />
         </button>
@@ -66,22 +79,24 @@ const TodoComponent = ({ todos, editTodo, deleteTodo }: TODO_ITEM_PROPS) => {
           <input
             type="checkbox"
             className="checkbox"
-            onChange={checkToggle}
-            checked={isCompleted}
+            onChange={handleCheckToggle}
+            checked={todoStatus.isCompleted}
           />
-          <span className={isCompleted ? 'done' : ''}>{todo}</span>
+          <span className={todoStatus.isCompleted ? 'done' : ''}>
+            {todoStatus.value}
+          </span>
         </label>
         <button
           data-testid="modify-button"
           className="modify-btn"
-          onClick={() => setIsEditMode(true)}
+          onClick={handleModify}
         >
           <GoPencil />
         </button>
         <button
           data-testid="delete-button"
           className="delete-btn"
-          onClick={() => deleteTodo(id)}
+          onClick={handleDelete}
         >
           <GoTrashcan />
         </button>
@@ -89,7 +104,7 @@ const TodoComponent = ({ todos, editTodo, deleteTodo }: TODO_ITEM_PROPS) => {
     </>
   )
 
-  return <div>{isEditMode ? showEditMode() : showViewMode()}</div>
+  return <div>{todoStatus.modifyMode ? showEditMode() : showViewMode()}</div>
 }
 
 export default TodoComponent

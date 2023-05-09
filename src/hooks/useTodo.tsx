@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import { TODO } from '../types'
-import { getTodoAPI } from '../api/todo'
+import { createTodoAPI, getTodoAPI } from '../api/todo'
+import useInputs from './useInputs'
 
 const useTodo = () => {
   const [todos, setTodos] = useState<TODO[]>([])
+  const {
+    values: { todo },
+    handleChange,
+    setValues
+  } = useInputs({ todo: '' })
 
   useEffect(() => {
     const fetchTodo = async () => {
@@ -17,7 +23,18 @@ const useTodo = () => {
     fetchTodo()
   }, [])
 
-  return { todos, setTodos }
+  const handleCreate = async (e: React.FormEvent<HTMLElement>) => {
+    try {
+      e.preventDefault()
+      const res = await createTodoAPI(todo)
+      setTodos([...todos, res.data])
+      setValues({ todo: '' })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  return { todos, setTodos, handleCreate, todo, handleChange }
 }
 
 export default useTodo

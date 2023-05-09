@@ -17,21 +17,21 @@ export interface TODO {
   isCompleted: boolean
 }
 
-export interface TODO_ITEM {
-  id: number
-  todo: string
+export interface UPDATE_TODO {
+  todo: string | any
   isCompleted: boolean
 }
 
-export interface UPDATE_TODO {
-  todo: string
+export interface TODO_MANAGER {
+  modifyMode: boolean
   isCompleted: boolean
+  value: string
 }
 
 export interface TODO_ITEM_PROPS {
-  todos: TODO_ITEM
+  todos: TODO
   checked: boolean
-  editTodo: (id: number, todo: string, isCompleted: boolean) => void
+  editTodo: (id: number, todoValue: UPDATE_TODO) => void
   deleteTodo: (id: number) => void
 }
 
